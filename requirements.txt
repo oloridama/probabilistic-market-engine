@@ -1,0 +1,22 @@
+# Core dependencies
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+scikit-learn>=1.0.0
+
+# API
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+
+# Utilities
+pyyaml>=6.0
+python-dateutil>=2.8.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+httpx>=0.24.0
+
+# Optional: for enhanced monitoring
+# prometheus-client>=0.17.0

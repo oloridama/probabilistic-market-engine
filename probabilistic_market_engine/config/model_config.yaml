@@ -1,0 +1,79 @@
+# Production Configuration for Probabilistic State-Space Trading Engine
+# All hyperparameters are centralized here for version control
+
+physics:
+  lookback_windows: [4, 16, 64]  # Multi-scale analysis windows
+  pressure_normalization_lookback: 256
+  energy_accumulation_window: 16
+  shock_detection_threshold: 2.5
+  path_memory_window: 8
+
+liquidity:
+  kde_bandwidth: 0.02
+  historical_lookback: 1000
+  time_decay_factor: 0.995
+  min_pivots_required: 10
+  pivot_prominence: 0.01
+
+feature_pipeline:
+  rolling_window: 64
+  standardization_lookback: 256
+  min_samples_for_std: 30
+  feature_subset_regime:
+    - pressure_norm
+    - alignment_score
+    - path_efficiency
+    - volatility_ratio
+    - shock_index
+
+regime_model:
+  n_regimes: 3
+  regime_labels:
+    - trend
+    - range
+    - shock
+  persistence_alpha: 0.7
+  random_state: 42
+  max_iter: 100
+  n_init: 10
+
+outcome_model:
+  prediction_horizon: 4  # 1 hour forward
+  continuation_threshold: 0.001  # 0.1% move
+  max_iter: 1000
+  calibration_method: isotonic  # Options: isotonic, platt, null
+
+risk_engine:
+  base_risk_scale: 1.0
+  max_risk_scale: 2.0
+  min_risk_scale: 0.0
+  shock_penalty_factor: 2.0
+  uncertainty_penalty_factor: 1.5
+
+training:
+  walkforward_train_size: 2000
+  walkforward_test_size: 500
+  walkforward_step_size: 250
+  min_train_samples: 500
+  calibration_window: 500
+
+monitoring:
+  drift_window_short: 100
+  drift_window_long: 500
+  brier_score_window: 250
+  regime_flip_threshold: 5
+  feature_drift_threshold: 2.0
+  alert_cooldown_periods: 10
+
+persistence:
+  model_registry_path: probabilistic_market_engine/persistence/model_registry
+  feature_store_path: probabilistic_market_engine/persistence/feature_store
+  logs_path: probabilistic_market_engine/persistence/logs
+  max_models_to_keep: 10
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  debug: false
+  request_timeout: 30
+  max_ohlcv_lookback: 256

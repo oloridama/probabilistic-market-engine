@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "probabilistic-market-engine"
+version = "1.0.0"
+description = "Production-grade nonlinear probabilistic state-space trading engine"
+readme = "README.md"
+license = {text = "Proprietary"}
+authors = [
+    {name = "Quantitative Systems Team"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21.0",
+    "pandas>=1.3.0",
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.24.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+]
+monitoring = [
+    "prometheus-client>=0.17.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/probabilistic-market-engine"
+Repository = "https://github.com/yourusername/probabilistic-market-engine"
+Documentation = "https://github.com/yourusername/probabilistic-market-engine/blob/main/README.md"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["probabilistic_market_engine*"]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+probabilistic_market_engine = ["config/*.yaml"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+
+[tool.pytest.ini_options]
+testpaths = ["probabilistic_market_engine/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

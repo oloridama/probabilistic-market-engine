@@ -100,13 +100,14 @@ class RegimeInferenceModel:
         self._feature_stds = np.std(R_features, axis=0) + 1e-10
         R_std = (R_features - self._feature_means) / self._feature_stds
         
-        # Fit GMM
+        # Fit GMM with configurable covariance type and regularization
         self._gmm = GaussianMixture(
             n_components=self.config.n_regimes,
             random_state=self.config.random_state,
             max_iter=self.config.max_iter,
             n_init=self.config.n_init,
-            covariance_type='full'
+            covariance_type=self.config.covariance_type,
+            reg_covar=self.config.reg_covar
         )
         
         self._gmm.fit(R_std)

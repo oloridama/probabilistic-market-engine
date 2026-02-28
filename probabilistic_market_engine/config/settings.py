@@ -18,6 +18,7 @@ class PhysicsConfig:
     energy_accumulation_window: int = 16
     shock_detection_threshold: float = 2.5
     path_memory_window: int = 8
+    min_samples_for_std: int = 30  # Required for normalization
 
 
 @dataclass
@@ -51,6 +52,8 @@ class RegimeModelConfig:
     random_state: int = 42
     max_iter: int = 100
     n_init: int = 10
+    covariance_type: str = 'spherical'  # 'full', 'tied', 'diag', 'spherical'
+    reg_covar: float = 0.01  # Regularization to prevent covariance collapse
 
 
 @dataclass
@@ -60,6 +63,7 @@ class OutcomeModelConfig:
     continuation_threshold: float = 0.001  # 0.1% move
     max_iter: int = 1000
     calibration_method: str = 'isotonic'  # 'isotonic', 'platt', None
+    min_train_samples: int = 100  # Minimum samples per regime for training
 
 
 @dataclass
@@ -206,6 +210,8 @@ class Settings:
             random_state=self._get_env_or_config('random_state', 42, 'regime_model'),
             max_iter=self._get_env_or_config('max_iter', 100, 'regime_model'),
             n_init=self._get_env_or_config('n_init', 10, 'regime_model'),
+            covariance_type=self._get_env_or_config('covariance_type', 'spherical', 'regime_model'),
+            reg_covar=self._get_env_or_config('reg_covar', 0.01, 'regime_model'),
         )
     
     def _init_outcome_model_config(self) -> OutcomeModelConfig:

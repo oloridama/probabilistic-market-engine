@@ -69,7 +69,7 @@ env/
 .env
 .env.local
 
-# Model registry and feature store (large files)
+# Model registry and feature store (large files - exclude from source repo)
 probabilistic_market_engine/persistence/model_registry/
 probabilistic_market_engine/persistence/feature_store/
 probabilistic_market_engine/persistence/logs/
